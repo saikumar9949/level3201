@@ -13,7 +13,7 @@ const todoList = () => {
       // ..
       // ..
       // ..
-      return all.filter((item)=> item.dueDate<new Date().toLocaleDateString("en-CA"));
+      return all.filter((item)=>{ return item.dueDate <= yesterday && item.completed ===false});
     }
   
     const dueToday = () => {
@@ -22,7 +22,7 @@ const todoList = () => {
       // ..
       // ..
       // ..
-      return all.filter((item)=> item.dueDate==new Date().toLocaleDateString("en-CA"));
+      return all.filter((item)=>{ return item.dueDate === today });
     }
   
     const dueLater = () => {
@@ -31,17 +31,24 @@ const todoList = () => {
       // ..
       // ..
       // ..
-      return all.filter((item)=> item.dueDate>new Date().toLocaleDateString("en-CA"));
+      return all.filter((item)=>return item.dueDate > tomorrow);
     }
   
     const toDisplayableList = (list) => {
-      // Format the To-Do list here, and return the output string as per the format given above.
-      // FILL YOUR CODE HERE
-      // ..
-      // ..
-      // ..
-      // return OUTPUT_STRING
-      return list.map(item=>` ${item.completed ? '[x]' : '[ ]'} ${item.title} ${item.dueDate==new Date().toLocaleDateString("en-CA")}`);
+      let mylist=[];
+        list.forEach((item)=>{
+            if(item.dueDate===today) {
+                if(item.completed===true) {
+                    mylist.push('[x] ${item.title}') }
+                else{
+                    mylist.push('[ ] ${item.title}') } }
+            else{
+                 if(item.completed===true) {
+                    mylist.push('[x] ${item.title} ${item.dueDate}') }
+                else{
+                    mylist.push('[ ] ${item.title} ${item.dueDate}') } }
+        })
+        return mylist.join("\n")
     }
   
     return { all, add, markAsComplete, overdue, dueToday, dueLater, toDisplayableList };
